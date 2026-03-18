@@ -359,6 +359,7 @@ section {
   font-size:1.6rem;
 }
 
+
 .projects{
   background-color: var(--second-bg-color);
 }
@@ -757,4 +758,163 @@ section {
 section p {
     font-size: 1.8rem !important; /* !important overrides any previous font-size settings */
     line-height: 1.8;
+}
+
+
+
+
+/* All Project Cards Same Hight */
+.projects-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: stretch; 
+    gap: 3rem;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.project-card p {
+    flex-grow: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* --- EXPERIENCE TIMELINE FULL DESIGN --- */
+
+.timeline-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 2rem 0;
+}
+
+/* Center glowing vertical line */
+.timeline-line {
+    position: absolute;
+    width: 6px;
+    background: var(--main-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px var(--main-color);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    margin-bottom: 5rem;
+}
+
+/* Left side */
+.left-item {
+    left: 0;
+    padding-right: 6rem;
+    text-align: right;
+}
+
+/* Right side */
+.right-item {
+    left: 50%;
+    padding-left: 6rem;
+    text-align: left;
+}
+
+/* Center glowing dot */
+.timeline-dot {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: var(--main-color);
+    border-radius: 50%;
+    top: 1rem;
+    box-shadow: 0 0 10px var(--main-color), 0 0 25px var(--main-color);
+    z-index: 10;
+}
+
+.left-item .timeline-dot { 
+    right: -9px; 
+}
+
+.right-item .timeline-dot { 
+    left: -9px; 
+}
+
+/* Date text */
+.timeline-date {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* --- Timeline Card (Glowing box) --- */
+.timeline-card {
+    background: var(--second-bg-color);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    
+    /* Default glow */
+    border: 2.5px solid var(--main-color);
+    box-shadow: 0 0 20px rgba(234, 88, 12, 0.4);
+}
+
+/* Hover effect (strong glow) */
+.timeline-card:hover {
+    box-shadow: 0 0 40px var(--main-color), 
+                0 0 15px rgba(234, 88, 12, 0.8);
+    transform: translateY(-10px) scale(1.03);
+    background: #151515;
+}
+
+.timeline-card h3 {
+    font-size: 2.2rem;
+    color: var(--main-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.timeline-card p {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: #e0e0e0 !important;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 3rem;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 7rem;
+        padding-right: 2rem;
+        text-align: left;
+    }
+
+    .right-item {
+        left: 0;
+    }
+
+    .left-item .timeline-dot, 
+    .right-item .timeline-dot {
+        left: 2.1rem;
+    }
+
+    .timeline-date {
+        margin-bottom: 1rem;
+    }
 }
