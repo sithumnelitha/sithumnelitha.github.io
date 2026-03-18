@@ -45,9 +45,14 @@ window.onscroll = () => {
 
 // ---  TYPING ANIMATION FIX ---
 var typed = new Typed(".typing", {
-    strings: ["Videographer", "Photographer", "Editor"],
+    strings: ["Videographer", "Photographer", "Editor", "Content Creator"],
     typeSpeed: 100, // Typing Speed
     backSpeed: 60,  // Erease Speed
     backDelay: 1000, // Wait Time
     loop: true
 });
+
+
+
+
+
