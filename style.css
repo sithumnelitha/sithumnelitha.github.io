@@ -714,3 +714,173 @@ section p { font-size: 1.6rem !important; line-height: 1.8; color: #e0e0e0; }
     top: 70%; /* Mobile Screen */
   }
 }
+
+
+/* --- SOFTWARE TICKER SECTION --- */
+.software {
+  min-height: auto !important; /* Prevent taking full page height */
+  padding: 6rem 10% 8rem;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Main container for the scrolling ticker */
+.ticker-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 2.5rem;
+  padding: 3rem 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Soft fade effect on both sides */
+.ticker-wrapper::before,
+.ticker-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 15%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ticker-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #060608 0%, rgba(6, 6, 8, 0) 100%);
+}
+
+.ticker-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #060608 0%, rgba(6, 6, 8, 0) 100%);
+}
+
+/* Horizontal scrolling track */
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: scrollTicker 25s linear infinite;
+}
+
+/* Pause animation on hover */
+.ticker-wrapper:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+/* Individual ticker item */
+.ticker-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  padding: 0 2rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Logo image styling */
+.ticker-item img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  margin-bottom: 1.2rem;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover glow + zoom effect */
+.ticker-item:hover img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px var(--main-color));
+}
+
+/* Software name text */
+.ticker-item h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.ticker-item:hover h4 {
+  color: var(--main-color);
+}
+
+/* Infinite scrolling animation */
+@keyframes scrollTicker {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .software {
+    padding: 4rem 5% 6rem;
+  }
+
+  .ticker-item {
+    width: 140px;
+  }
+
+  .ticker-item img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .ticker-item h4 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Remove unnecessary spacing in software section */
+#softwares {
+  min-height: auto !important;
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
+}
+
+/* Reduce contact section spacing slightly */
+#contact {
+  min-height: auto !important;
+  padding-top: 6rem !important;
+  padding-bottom: 8rem !important;
+}
+
+
+
+/* --- MOBILE VIEW CARD FIX --- */
+@media (max-width: 768px) {
+  .img-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .home-img img, .about-img img {
+    width: 60vw; 
+    margin-bottom: 2rem;
+  }
+
+  /* Both Card absolute position  */
+  .floating-card {
+    position: static !important;
+    animation: none !important; /* Mobile  */
+    width: 80%;
+    max-width: 260px;
+    margin: 0.5rem auto !important;
+    justify-content: flex-start;
+  }
+}
