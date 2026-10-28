@@ -13,49 +13,91 @@ tabs.forEach(tab => {
     });
 });
 
-// SMOOTH SCROLL NAVIGATION
-const navLinks = document.querySelectorAll("header nav a");
+// --- ANIMATED NAVIGATION (click + scroll spy) ---
+const navigation = document.querySelector(".navigation");
+const navItems = document.querySelectorAll(".navigation .list");
+const navSections = Array.from(navItems).map(item =>
+    document.querySelector(item.querySelector("a").getAttribute("href"))
+);
 
-navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-        if (link.hash !== "") {
-            e.preventDefault();
+const HEADER_HEIGHT = 80;
+let isClickScrolling = false;
+let unlockTimer;
 
-            const targetId = link.hash;
-            const targetSection = document.querySelector(targetId);
-            const headerHeight = 80;
-            const targetPosition = targetSection.offsetTop - headerHeight;
+// Move the active item + sliding indicator
+function setActive(index) {
+    navItems.forEach((item, i) => item.classList.toggle("active", i === index));
+    navigation.style.setProperty("--active-index", index);
+}
 
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth"
-            });
-        }
+// Click on a navigation item -> smooth scroll to the section
+navItems.forEach((item, index) => {
+    item.querySelector("a").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const section = navSections[index];
+        if (!section) return;
+
+        // Pause scroll-spy while the smooth scroll is running
+        isClickScrolling = true;
+        clearTimeout(unlockTimer);
+        unlockTimer = setTimeout(() => { isClickScrolling = false; }, 1000);
+
+        setActive(index);
+
+        const top = section.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
+        window.scrollTo({ top: top, behavior: "smooth" });
     });
 });
 
-// MOBILE MENU TOGGLE
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+// Scroll spy -> highlight the section currently in view
+function updateActiveOnScroll() {
+    const scrollPos = window.scrollY + window.innerHeight * 0.35;
+    let current = 0;
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-};
+    navSections.forEach((section, i) => {
+        if (!section) return;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        if (sectionTop <= scrollPos) current = i;
+    });
 
-window.onscroll = () => {
-    menuIcon.classList.remove('bx-x');
-    navbar.classList.remove('active');
-};
+    // At the very bottom of the page -> last item (Contact)
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+        current = navSections.length - 1;
+    }
+
+    setActive(current);
+}
+
+let ticking = false;
+window.addEventListener("scroll", () => {
+    if (isClickScrolling) {
+        // Unlock shortly after the smooth scroll finishes
+        clearTimeout(unlockTimer);
+        unlockTimer = setTimeout(() => { isClickScrolling = false; }, 150);
+        return;
+    }
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            updateActiveOnScroll();
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+updateActiveOnScroll();
 
 // TYPING ANIMATION
-var typed = new Typed(".typing", {
-    strings: ["Videographer", "Photographer", "Editor", "Content Creator"],
-    typeSpeed: 100,
-    backSpeed: 60,
-    backDelay: 1000,
-    loop: true
-});
+if (typeof Typed !== "undefined") {
+    var typed = new Typed(".typing", {
+        strings: ["Videographer", "Photographer", "Editor", "Content Creator"],
+        typeSpeed: 100,
+        backSpeed: 60,
+        backDelay: 1000,
+        loop: true
+    });
+}
 
 // --- ADVANCED SCROLL REVEAL ANIMATION SYSTEM ---
 // Animate elements when scrolling through the website
@@ -219,8 +261,145 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// --- FLY BUTTONS (Resume Download / Review Project / Hire Me) ---
+// Click -> letters fly into the icon -> button shrinks to a circle
+// -> loading ring -> button expands -> letters return -> action runs
+document.addEventListener("DOMContentLoaded", () => {
 
+    const flyButtons = document.querySelectorAll(".fly-btn");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const OFFSET = 80; // fixed header height (same as the navigation)
 
+    // Build icon + one <span> per letter
+    flyButtons.forEach(btn => {
+        const label = btn.textContent.trim();
+        const iconClass = btn.dataset.icon || "bx-right-arrow-alt";
 
+        btn.setAttribute("aria-label", label);
+        btn.textContent = "";
 
+        const icon = document.createElement("span");
+        icon.className = "fly-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.innerHTML = '<i class="bx ' + iconClass + '"></i>';
 
+        const text = document.createElement("span");
+        text.className = "fly-text";
+        text.setAttribute("aria-hidden", "true");
+
+        Array.from(label).forEach((ch, i) => {
+            const letter = document.createElement("span");
+            letter.className = "fly-letter";
+            letter.textContent = ch === " " ? "\u00A0" : ch;
+            letter.style.setProperty("--i", i);
+            text.appendChild(letter);
+        });
+
+        btn.append(icon, text);
+    });
+
+    // Measure how far each letter has to travel to reach the icon
+    function measureLetters(btn) {
+        const icon = btn.querySelector(".fly-icon");
+        const iconX = icon.offsetLeft + icon.offsetWidth / 2;
+
+        btn.querySelectorAll(".fly-letter").forEach(letter => {
+            const letterX = letter.offsetLeft + letter.offsetWidth / 2;
+            const spin = (Math.random() < 0.5 ? -1 : 1) * (180 + Math.random() * 180);
+            letter.style.setProperty("--fly-dist", (letterX - iconX) + "px");
+            letter.style.setProperty("--rot", spin + "deg");
+        });
+    }
+
+    // What the button really does after the animation
+    function runAction(btn) {
+        const href = btn.getAttribute("href");
+        if (!href || href === "#") return;
+
+        // Hire Me -> smooth scroll to the contact form
+        if (href.startsWith("#")) {
+            const target = document.querySelector(href);
+            if (target) {
+                const top = target.getBoundingClientRect().top + window.scrollY - OFFSET;
+                window.scrollTo({ top: top, behavior: "smooth" });
+            }
+            return;
+        }
+
+        // Resume Download -> start the file download
+        if (btn.hasAttribute("download")) {
+            const a = document.createElement("a");
+            a.href = href;
+            a.download = btn.getAttribute("download") || "";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            return;
+        }
+
+        // Review Project -> open the project page
+        if (btn.target === "_blank") {
+            const win = window.open(href, "_blank");
+            if (win) { win.opener = null; } else { window.location.href = href; } // popup blocked -> same tab
+            return;
+        }
+
+        window.location.href = href;
+    }
+
+    function play(btn) {
+        const letters = btn.querySelectorAll(".fly-letter").length;
+        const startW = btn.offsetWidth;
+        const circleW = btn.offsetHeight;
+
+        const stepOut = Math.min(55, 650 / letters);
+        const stepIn = Math.min(45, 500 / letters);
+        const flyMs = (letters - 1) * stepOut + 500;
+
+        btn.style.setProperty("--step-out", stepOut + "ms");
+        btn.style.setProperty("--step-in", stepIn + "ms");
+        btn.style.setProperty("--fly-ms", flyMs + "ms");
+
+        btn.classList.add("is-busy");
+        btn.style.width = startW + "px"; // freeze the width so it can animate
+        measureLetters(btn);
+
+        // 1) letters fly into the icon
+        btn.classList.add("is-fly");
+
+        // 2) shrink into a circle
+        const tCircle = flyMs + 80;
+        setTimeout(() => {
+            btn.classList.add("is-circle");
+            btn.style.width = circleW + "px";
+        }, tCircle);
+
+        // 3) loading rings
+        const tLoad = tCircle + 600;
+        setTimeout(() => btn.classList.add("is-loading"), tLoad);
+
+        // 4) expand again, letters come back, run the real action
+        const tExpand = tLoad + 1300;
+        setTimeout(() => {
+            btn.classList.remove("is-loading", "is-circle", "is-fly");
+            btn.style.width = startW + "px";
+            runAction(btn);
+        }, tExpand);
+
+        // 5) clean up
+        setTimeout(() => {
+            btn.classList.remove("is-busy");
+            btn.style.width = "";
+        }, tExpand + 250 + (letters - 1) * stepIn + 600);
+    }
+
+    flyButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (btn.classList.contains("is-busy")) return;
+
+            if (reduceMotion) { runAction(btn); return; }
+            play(btn);
+        });
+    });
+});
