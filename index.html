@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sithum Nelitha | Portfolio</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="Favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="Favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="Favicon/favicon-16x16.png">
-  <link rel="manifest" href="Favicon/site.webmanifest">
-  <link rel="shortcut icon" href="Favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/favicon/favicon.ico">
 
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
@@ -24,17 +24,51 @@
     <a href="#home" class="logo scroll-animate zoom-in">
       Sithum <span>Nelitha</span>
     </a>
-    <i class="bx bx-menu" id="menu-icon"></i>
-    <nav class="navbar">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#experience">Experience & Education</a>
-      <a href="#projects">Projects</a>
-      <a href="#softwares">Softwares</a>
-      <a href="#contact">Contact</a>
-    </nav>
     <a href="#contact" class="gradient-btn">Contact Me</a>
   </header>
+
+  <!-- ANIMATED NAVIGATION -->
+  <nav class="navigation">
+    <ul>
+      <li class="list active">
+        <a href="#home" aria-label="Home">
+          <span class="icon"><ion-icon name="home"></ion-icon></span>
+          <span class="text">Home</span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#about" aria-label="About">
+          <span class="icon"><ion-icon name="person"></ion-icon></span>
+          <span class="text">About</span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#experience" aria-label="Experience and Education">
+          <span class="icon"><ion-icon name="briefcase"></ion-icon></span>
+          <span class="text">Experience</span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#projects" aria-label="Projects">
+          <span class="icon"><ion-icon name="camera"></ion-icon></span>
+          <span class="text">Projects</span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#softwares" aria-label="Softwares">
+          <span class="icon"><ion-icon name="construct"></ion-icon></span>
+          <span class="text">Softwares</span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="#contact" aria-label="Contact">
+          <span class="icon"><ion-icon name="mail"></ion-icon></span>
+          <span class="text">Contact</span>
+        </a>
+      </li>
+    </ul>
+    <div class="indicator"><i></i><i></i><i></i><i></i></div>
+  </nav>
 
   <section class="home" id="home">
         <div class="home-content scroll-animate slide-left">
@@ -59,7 +93,7 @@
       </div>
 
       <div class="btn-group">
-        <a href="#contact" class="btn">Hire Me</a>
+        <a href="#contact" class="fly-btn" data-icon="bx-briefcase">Hire Me</a>
         <a href="https://www.youtube.com/@SithuBeastLk" target="_blank" class="btn watch-btn">
                     <i class="bx bxl-youtube"></i> Watch Videos
                 </a>
@@ -104,7 +138,7 @@
         and cinematic color correction. I thrive in fast-paced environments 
         and consistently deliver clean, high-quality visuals that exceed client expectations.
       </p>
-      <a href="Resume.pdf" target="_blank" class="btn">Resume Download</a>
+      <a href="Resume.pdf" download="Sithum-Nelitha-Resume.pdf" class="fly-btn" data-icon="bx-download">Resume Download</a>
     </div>
   </section>
 
@@ -129,7 +163,7 @@
           <div class="timeline-dot"></div>
           <div class="timeline-date">2025 - 2026</div>
           <div class="timeline-card">
-            <h3>CONTENT CREATER</h3>
+            <h3>CONTENT CREATOR</h3>
             <p>Frn Ibrahim Ali Cafeteria - sole, Abu Dhabi UAE</p>
           </div>
         </div>
@@ -178,37 +212,37 @@
         <img src="Projects/Videography.jpg" alt="Videography">
         <h3>Videography</h3>
         <p>Pro videography with professional camera techniques, creative shot composition, and visually stunning storytelling.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="#" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
       <div class="project-card scroll-animate zoom-in">
         <img src="Projects/PhotoColorgrade.png" alt="Photo Colorgrade">
         <h3>Photo Colorgrade</h3>
         <p>Advanced Adobe Photoshop using, transforming raw imagery with color grading and professional skin retouching.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="#" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
       <div class="project-card scroll-animate slide-right">
-        <img src="Projects/Photo Retouch .png" alt="Photo Retouching">
+        <img src="Projects/Photo Retouch.png" alt="Photo Retouching">
         <h3>Photo Retouching</h3>
         <p>Advanced Adobe Photoshop skin retouching delivering clean, high-end bridal aesthetics while preserving textures.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="#" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
       <div class="project-card scroll-animate slide-left">
         <img src="Projects/Video Edithing.jpg" alt="Video Editing">
         <h3>Video Editing</h3>
         <p>Video editing blends technical precision and cinematic flair, using color grading and smooth transitions.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="reels-compare.html" target="_blank" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
       <div class="project-card scroll-animate zoom-in">
         <img src="Projects/Web Page Design.png" alt="Web Pages Design">
         <h3>Web Pages Design</h3>
         <p>This web design project digital layout and cinematic branding, using Photoshop for engaging interfaces.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="#" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
       <div class="project-card scroll-animate slide-right">
         <img src="Projects/Function Photohraphy.png" alt="Function Photography">
         <h3>Function Photography</h3>
         <p>I capture every event story through cinematic photography, blending candid moments with professional detail.</p>
-        <a href="#" class="btn">Review Project</a>
+        <a href="#" class="fly-btn" data-icon="bx-show">Review Project</a>
       </div>
     </div>
   </section>
@@ -226,6 +260,7 @@
         <div class="ticker-item"><img src="Icons/master house.png" alt="Mister Horse"><h4>Mister Horse</h4></div>
         <div class="ticker-item"><img src="Icons/Auto cut.png" alt="AutoCut"><h4>AutoCut</h4></div>
         <div class="ticker-item"><img src="Icons/flim impact.jpg" alt="Film Impact"><h4>Film Impact</h4></div>
+        <div class="ticker-item"><img src="Icons/capcut.jpg" alt="Cap Cut"><h4>CapCut</h4></div>
 
         <div class="ticker-item"><img src="Icons/adobe-photoshop-icon.png" alt="Photoshop"><h4>Photoshop</h4></div>
         <div class="ticker-item"><img src="Icons/adobe-premiere-pro-icon.png" alt="Premiere Pro"><h4>Premiere Pro</h4></div>
@@ -234,6 +269,7 @@
         <div class="ticker-item"><img src="Icons/master house.png" alt="Mister Horse"><h4>Mister Horse</h4></div>
         <div class="ticker-item"><img src="Icons/Auto cut.png" alt="AutoCut"><h4>AutoCut</h4></div>
         <div class="ticker-item"><img src="Icons/flim impact.jpg" alt="Film Impact"><h4>Film Impact</h4></div>
+        <div class="ticker-item"><img src="Icons/capcut.jpg" alt="Cap Cut"><h4>CapCut</h4></div>
       </div>
     </div>
   </section>
@@ -274,9 +310,6 @@
     <p class="copyright">© Sithum Nelitha | All Rights Reserved</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="script.js"></script>
-
 <div class="radial-menu-container" id="radialMenu">
     <div class="menu-toggle">
       <i class='bx bx-globe toggle-icon'></i>
@@ -306,6 +339,12 @@
     </ul>
   </div>
 
+  <!-- Ionicons (navbar icons) -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
